@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SPT.MultiplyWeightLimits</RootNamespace>
+    <AssemblyName>SPT-MultiplyWeightLimits</AssemblyName>
+    <Version>4.1.0</Version>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputPath>bin\$(Configuration)\$(AssemblyName)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Spectre.Console.Ansi">
+      <HintPath>$(SptRuntimePath)\Spectre.Console.Ansi.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SemanticVersioning">
+      <HintPath>$(SptRuntimePath)\SemanticVersioning.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SPTarkov.Common">
+      <HintPath>$(SptRuntimePath)\SPTarkov.Common.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SPTarkov.DI">
+      <HintPath>$(SptRuntimePath)\SPTarkov.DI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SPTarkov.Server.Core">
+      <HintPath>$(SptRuntimePath)\SPTarkov.Server.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="config\config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="ValidateSptRuntime" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="'$(SptPath)' == ''"
+           Text="SPT path is not configured. Pass -p:SptPath or create Directory.Build.props.user." />
+    <Error Condition="!Exists('$(SptRuntimePath)\SPTarkov.Server.Core.dll')"
+           Text="SPT 4.1 runtime assemblies were not found under '$(SptRuntimePath)'." />
+  </Target>
+
+</Project>

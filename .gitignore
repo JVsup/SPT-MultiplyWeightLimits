@@ -1,0 +1,7 @@
+
+Directory.Build.props.user
+.vs/
+**/bin/
+**/obj/
+artifacts/
+dist/
